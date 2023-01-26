@@ -9,19 +9,21 @@ const userRoute=express.Router();
 userRoute.get("/",async(req,res)=>{
     try {
         const data = await UserModel.find();
+        
         res.send(data);
     } catch (error) {
         res.send("Eroor while getting users");
         console.log({err:error})
     }
 })
-userRoute.get("/:id",async(req,res)=>{
-    let ID=req.params.id;
+userRoute.get("/getUserDetail",async(req,res)=>{
+    let ID=req.headers.user_id;
+    // console.log(ID)
     try {
         const data = await UserModel.findOne({_id:ID});
         res.send(data);
     } catch (error) {
-        res.send("Eroor while getting users");
+        res.send({err:"Eroor while getting users"});
         console.log({err:error})
     }
 })
@@ -41,7 +43,7 @@ userRoute.post("/register",async(req,res)=>{
             }
         });
     } catch (error) {
-        res.send("Eroor while registering user")
+        res.send({err:"Eroor while registering user"})
         console.log({err:error})
     }
 })
@@ -67,7 +69,7 @@ userRoute.post("/login",async(req,res)=>{
         }
     } catch (error) {
         console.log({err:error})
-        res.send("Eroor while login")
+        res.send({err:"Eroor while login"})
     }
 })
 
@@ -91,7 +93,7 @@ userRoute.patch("/update/:id",async(req,res)=>{
             });
         }
     } catch (error) {
-        res.send("Eroor while updating user")
+        res.send({err:"Eroor while updating user"})
         console.log({err:error})
     }
 })

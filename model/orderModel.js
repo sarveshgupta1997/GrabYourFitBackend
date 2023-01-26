@@ -8,7 +8,9 @@ const orderSchema =mongoose.Schema({
     product_id:String,
     img1_src:String,
     order_date:String,
-    order_time:String
+    order_time:String,
+    order_status:String,
+    order_delivery_date:String
 });
 
 const OrderModel = mongoose.model("order",orderSchema);

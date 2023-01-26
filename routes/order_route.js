@@ -4,22 +4,22 @@ const {OrderModel} = require("../model/orderModel");
 const orderRoute=express.Router();
 
 orderRoute.get("/",async(req,res)=>{
-    console.log(req.body.user_id)
     try {
         const data = await OrderModel.find({user_id:req.body.user_id});
         res.send(data);
     } catch (error) {
-        res.send({err:"Eroor while getting products"});
+        res.send({err:"Eroor while getting orders"});
         console.log({err:error})
     }
 })
 
+// For Admin only
 orderRoute.get("/all",async(req,res)=>{
     try {
         const data = await OrderModel.find();
         res.send(data);
     } catch (error) {
-        res.send({err:"Eroor while getting products"});
+        res.send({err:"Eroor while getting orders"});
         console.log({err:error})
     }
 })
@@ -46,6 +46,8 @@ orderRoute.post("/create",async(req,res)=>{
     console.log(payload)
     payload.order_date=get_date();
     payload.order_time=get_time();
+    payload.order_status="In Progress"; 
+    payload.order_delivery_date="Not Delivered"; 
     try {
         const product = new OrderModel(payload);
         await product.save();
@@ -56,5 +58,20 @@ orderRoute.post("/create",async(req,res)=>{
     }
 })
 
+orderRoute.patch("/update",async(req,res)=>{
+    console.log("hi")
+    let payload={
+        order_status:"Delivered", 
+        order_delivery_date:get_date()
+    }
+    ID=req.headers.order_to_update;
+    try {
+        await OrderModel.findByIdAndUpdate({_id:ID},payload);
+        res.send({"message":`Order Updated with id:${ID}`});
+    } catch (error) {
+        console.log({err:error})
+        res.send({err:"Error while updating order"})
+    }
+})
 
 module.exports={orderRoute};
