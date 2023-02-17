@@ -12,7 +12,8 @@ const productSchema =mongoose.Schema({
     created_date:String,
     created_time:String,
     last_updated_date:String,
-    last_updated_time:String
+    last_updated_time:String,
+    purchases:Number
 });
 
 const ProductModel = mongoose.model("product",productSchema);

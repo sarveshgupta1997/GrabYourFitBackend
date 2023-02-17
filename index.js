@@ -19,6 +19,10 @@ app.use(cors());
 //     useTempFiles:true
 // }))
 
+app.get("/",(req,res)=>{
+    res.send("Grab Your Fit Backend")
+})
+
 app.use(adminAuthenticator);
 app.use(authenticator);
 app.use("/users",userRoute);

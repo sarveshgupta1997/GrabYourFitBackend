@@ -13,6 +13,7 @@ const productRoute=express.Router();
 
 productRoute.get("/",async(req,res)=>{
     try {
+        // await ProductModel.updateMany({},{$set:{purchases:1}});
         const data = await ProductModel.find();
         res.send(data);
     } catch (error) {
@@ -52,6 +53,7 @@ productRoute.post("/create",async(req,res)=>{
     let payload=req.body;
     payload.created_date=get_date();
     payload.created_time=get_time();
+    payload.purchases=0;
     try {
         const product = new ProductModel(payload);
         await product.save();

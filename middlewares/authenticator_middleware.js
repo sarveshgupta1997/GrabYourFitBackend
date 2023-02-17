@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const authenticator = (req,res,next)=>{
     // console.log(req.url)
-    if(req.url=="/orders/" || req.url=="/username"){
+    if(req.url=="/orders/" || req.url=="/username" || req.url=="/orders/create"){
         const token = req.headers.token;
         if(token){
             const decode = jwt.verify(token,process.env.secretKey,(err,decode)=>{
